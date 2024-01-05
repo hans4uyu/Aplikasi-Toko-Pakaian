@@ -1,0 +1,44 @@
+{%extends 'layouts/admin_layout.html'%}
+{%block head%}
+<title>Halaman Register</title>
+{%endblock%}
+{%block body%}
+<div class="mt-5"></div>
+<div class="row justify-content-center">
+    <div  class="col-4">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-center card-header bg-primary text-white">Register</h2>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label class="form-label">UserName</label>
+                        <input name="inpUsn" type="text" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email address</label>
+                        <input name="inpEmail" type="email" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <input name="inpPass" type="password"  class="form-control"> 
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label"> confirm Password</label>
+                        <input name="inpPass2" type="password"  class="form-control"> 
+                    </div>
+                    <div class="d-grid">
+                        <!-- Change the button text to Register -->
+                        <button type="submit" class="btn btn-primary mt-4">Register</button>
+                    </div>
+                    <div class="d-grid">
+                        <!-- Change the button text to Register -->
+                        Alredy have account? <a href="{{url_for('login')}}">Login</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}

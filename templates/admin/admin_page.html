@@ -1,0 +1,63 @@
+{% extends 'layouts/admin_layout.html' %} {% block head %}
+<link rel="stylesheet" href="/static/admin.css">
+<title>Halaman Admin</title>
+{% endblock %} {% block body %}
+<div class="wrapper">
+    <!-- Sidebar  -->
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <h3>Welcome to the Admin Dashboard, {{ session['username'] }}!</h3>
+        </div>
+
+        <ul class="list-unstyled components">
+            <p>Dummy Heading</p>
+            <li class="active">
+                <a href="#home" aria-expanded="false" class="">Home</a>
+            </li>
+            <li>
+                <a href="{{ url_for('admin_produk') }}">Products</a>
+            </li>
+        </ul>
+
+        <ul class="list-unstyled CTAs">
+            <li>
+                <a href="{{ url_for('logout') }}" class="download">Logout</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Page Content  -->
+    <div id="content">
+        <h2>Daftar Users</h2>
+        <div class="line"></div>
+        <div class=""mb-3></div>
+        <!-- tabel Bootstrap -->
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Email</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- looping baris data -->
+                {% for row in users %}
+                    {% if row.4 == 'user' %}
+                        <tr>
+                            <th scope="row">{{row.0}}</th>
+                            <td>{{row.1}}</td>
+                            <td>{{row.3}}</td>
+                            <td>{{row.4}}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+    <script src="/static/admin.js"></script>
+</body>
+
+{% endblock %}
