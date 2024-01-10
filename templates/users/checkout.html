@@ -1,0 +1,97 @@
+{% extends 'layouts/extend_layout.html' %}
+
+{% block head %}
+<title>Chekout DEKK</title>
+<style>
+        /* Add your modal styling here */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .close-btn {
+            cursor: pointer;
+            font-size: 20px;
+            position: absolute;
+            top: 10px;
+            right: 15px;
+        }
+        .product-card {
+        margin: 50px; 
+        margin-bottom: 10px; /* Menambahkan margin ke sekeliling kartu produk */
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        {% if products_in_cart %}
+            <h1 class="text-center fs-4 contact text-uppercase fw-bold">Checkout</h1>
+            <h2 class="text-center fs-6 text-muted text-uppercase">Selected products</h2>
+            <ul class="list-group mb-4 d-flex flex-row flex-wrap">
+                {% for product in products_in_cart %}
+    <div class="col-md-4 col-lg-3 product-card">
+        <div class="card">
+            <li class="list-group-item d-flex justify-content-center">
+                <img src="{{ url_for('static', filename='uploads/' + product[6]) }}" alt="{{ product[2] }}" class="mr-3" style="max-width: 300px;">
+            </li>
+            <div class="card-body">
+                <div class="card-title d-flex flex-column">
+                    <li class="list-group-item">No Artikel: {{ product[1] }}</li>
+                    <li class="list-group-item">Product: {{ product[2] }}</li>
+                    <li class="list-group-item">Size : {{ product[5] }}</li>
+                    <li class="list-group-item">Price: Rp{{ product[4] }}</li>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+            </ul>
+
+            <form method="post" action="{{ url_for('process_checkout') }}" id="checkoutForm">
+                <!-- Tambahkan formulir untuk shipping_address dan payment_method -->
+                <div class="form-group" style="background-color: #eee; margin: 10px; border-radius: 10px; padding: 20px;">
+                    <label for="shipping_address">Shipping Address:</label>
+                    <input type="text" class="form-control" id="shipping_address" name="shipping_address" required>
+                </div>
+
+                <div class="form-group" style="background-color: #eee; margin: 10px; border-radius: 10px; padding: 20px;">
+                    <label for="payment_method">Payment Method:</label>
+                    <select class="form-control" id="payment_method" name="payment_method" required>
+                        <option value="credit_card">Credit Card</option>
+                        <option value="paypal">PayPal</option>
+                    </select>
+                </div>
+
+                <br>
+                <div class="btn-group">
+                    <button type="submit" class="btn btn-primary mb-2 mr-3" id="checkoutBtn">Process Checkout</button>
+                </div>
+                <a href="{{ url_for('product') }}" class="btn btn-secondary mb-2">Browse Products</a>
+                <a href="{{ url_for('home') }}" class="btn btn-secondary mb-2">Back to Home</a>
+            </form>
+        {% endif %}
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('checkoutBtn').addEventListener('click', function () {
+                alert('Checkout successful! Thank you for your purchase.');
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,26 +1,107 @@
-{%extends 'layouts/layout.html'%} {%block head%}
-<title>Halaman shop</title>
-{%endblock%} {%block body%}
+{% extends 'layouts/layout.html' %}
+
+{% block head %}
+<title>HALLODEKK Shop</title>
+<style>
+  .card {
+    width: 18rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card-img-top {
+    flex: 1;
+    object-fit: cover;
+  }
+
+  .card-body {
+    flex: 1;
+  }
+
+    .card img {
+      transition: filter 0.3s;
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .card .card-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .card:hover .card img {
+      filter: brightness(70%);
+    }
+
+    .card:hover .card-overlay {
+      opacity: 1;
+    }
+
+    .card-button {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .card:hover .card-button {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .harga{
+      opacity: 1;
+      transition: opacity 2s;
+    }
+
+    .card:hover .harga {
+      visibility: hidden;
+      opacity: 0;
+    }
+    .produk{
+      letter-spacing: 3px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
 <div>
   <div class="container">
-    <h2 class="mt-4">Featured Products</h2>
+    <h2 class="mt-4 display-7 text-uppercase fw-bold produk">Product </h2>
     <div class="row mt-3">
       {% for product in products %}
-      <div class="col-md-4">
-        <div class="card mt-4">
+      <div class="col-md-3 mt-3">
+        <div class="card mt-3 mb-4 border-0 rounded-0">
           <img
-            src="https://via.placeholder.com/300x400"
-            class="card-img-top"
+            src="{{ url_for('static', filename='uploads/' + product[6]) }}"
+            class="card-img-top w-100 rounded-0"
             alt="Product Image"
+            style="max-height: 200px; object-fit:cover;"
           />
+          <div class="card-overlay"></div>
+              <a href="{{ url_for('product_detail', product_id=product[0]) }}" 
+              class="btn bg-transparant border border-white rounded-0 card-button square-button"
+              onmouseover="this.style.backgroundColor='red';"
+              onmouseout="this.style.backgroundColor='transparent';">
+              <i class="fa-regular fa-eye" style="color: #ffffff;"></i>
+              </a>
           <div class="card-body">
-            <h5 class="card-title">{{ product.name }}</h5>
-            <p class="card-text">{{ product.description }}</p>
-            <a
-              href="{{ url_for('product_detail', product_id=product.id) }}"
-              class="btn btn-primary"
-              >Shop Now</a
-            >
+            <h5 class="card-title fw-bold">{{ product[2][:23] }}</h5>
+            <p class="card-text">{{ product[3][:30] }}<span id="dots">...</span></p>
+            <p class="card-text fw-semibold harga">Harga: {{ product[4] }}</p>
           </div>
         </div>
       </div>
@@ -28,4 +109,6 @@
     </div>
   </div>
 </div>
-{%endblock%}
+<br>
+<hr>
+{% endblock %}

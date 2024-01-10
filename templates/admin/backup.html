@@ -1,0 +1,224 @@
+{% extends 'layouts/admin_layout.html' %} {% block head %}
+<link rel="stylesheet" href="/static/admin.css">
+<title>Halaman Admin</title>
+{% endblock %} {% block body %}
+<div class="wrapper">
+    <!-- Sidebar  -->
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <h3>Welcome to the Admin Dashboard, {{ session['username'] }}!</h3>
+        </div>
+
+        <ul class="list-unstyled components">
+            <p>Dummy Heading</p>
+            <li class="active">
+                <a href="{{ url_for('admin') }}">Home</a>
+            </li>
+            <li>
+                <a href="{{ url_for('admin_produk') }}">Products</a>
+            </li>
+        </ul>
+
+        <ul class="list-unstyled CTAs">
+            <li>
+                <a href="{{ url_for('logout') }}" class="download">Logout</a>
+            </li>
+        </ul>
+    </nav>
+    <div id="content">
+        <h2>Daftar Produk</h2>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+        data-bs-target="#addProdukModal">
+            Add Produk
+        </button>
+        <div class="line"></div>
+        <div class=""mb-3></div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>No Artikel</th>
+                    <th>Nama</th>
+                    <th>Deskripsi</th>
+                    <th>Harga</th>
+                    <th>Size S</th>
+                    <th>Size M</th>
+                    <th>Size L</th>
+                    <th>Size XL</th>
+                    <th>Foto</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr>
+                    <td>{{ product[1] }}</td>
+                    <td>{{ product[2] }}</td>
+                    <td>{{ product[3] }}</td>
+                    <td>{{ product[4] }}</td>
+                    <td>{{ product[5] }}</td>
+                    <td>{{ product[6] }}</td>
+                    <td>{{ product[7] }}</td>
+                    <td>{{ product[8] }}</td>
+                    <td>{{ product[9] }}</td>
+                    <td>
+                        <a href="{{ url_for('edit_produk', id=product[0]) }}" class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                        data-bs-target="#editProdukModal">Edit</a>
+                        <a href="{{ url_for('delete_produk', id=product[0]) }}" class="btn btn-danger btn-sm" >Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+
+        <!-- Add Produk Modal -->
+        <div class="modal fade" id="addProdukModal" tabindex="-1" aria-labelledby="addProdukModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addProdukModalLabel">Tambahkan Data Produk</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="addProdukForm" method="POST" action="/add" onsubmit="return validateForm()">
+                            <div class="mb-3">
+                                <label for="no_artikel" class="form-label">Nomor Artikel</label>
+                                <input type="text" class="form-control" id="no_artikel" name="no_artikel" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="nama" class="form-label">Nama Produk</label>
+                                <input type="text" class="form-control" id="nama" name="nama" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="deskripsi" class="form-label">Deskripsi</label>
+                                <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3" required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="harga" class="form-label">Harga</label>
+                                <input type="number" class="form-control" id="harga" name="harga" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="size_s" class="form-label">Size S</label>
+                                <input type="number" class="form-control" id="size_s" name="size_s" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="size_m" class="form-label">Size M</label>
+                                <input type="number" class="form-control" id="size_m" name="size_m" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="size_l" class="form-label">Size L</label>
+                                <input type="number" class="form-control" id="size_l" name="size_l" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="size_xl" class="form-label">Size XL</label>
+                                <input type="number" class="form-control" id="size_xl" name="size_xl" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="file_gambar" class="form-label">File Gambar</label>
+                                <input type="text" class="form-control" id="file_gambar" name="file_gambar" required>
+                            </div>
+                        </form>
+                        <div id="feedbackMessage"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kembali</button>
+                        <button type="submit" form="addProdukForm" class="btn btn-primary">Tambah Produk</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit Modal -->
+<div class="modal fade" id="editProdukModal" tabindex="-1" aria-labelledby="editProdukModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editProdukModalLabel">Edit Data Produk</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editProdukForm" method="POST" action="/edit" onsubmit="return validateForm()">
+                    <div class="mb-3">
+                        <label for="no_artikel" class="form-label">Nomor Artikel</label>
+                        <input type="text" class="form-control" id="no_artikel" name="no_artikel" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="nama" class="form-label">Nama Produk</label>
+                        <input type="text" class="form-control" id="nama" name="nama" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="deskripsi" class="form-label">Deskripsi</label>
+                        <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="harga" class="form-label">Harga</label>
+                        <input type="number" class="form-control" id="harga" name="harga" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="size_s" class="form-label">Size S</label>
+                        <input type="number" class="form-control" id="size_s" name="size_s" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="size_m" class="form-label">Size M</label>
+                        <input type="number" class="form-control" id="size_m" name="size_m" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="size_l" class="form-label">Size L</label>
+                        <input type="number" class="form-control" id="size_l" name="size_l" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="size_xl" class="form-label">Size XL</label>
+                        <input type="number" class="form-control" id="size_xl" name="size_xl" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="file_gambar" class="form-label">File Gambar</label>
+                        <input type="text" class="form-control" id="file_gambar" name="file_gambar" required>
+                    </div>
+                </form>
+                <div id="feedbackMessage"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kembali</button>
+                <button type="submit" form="editProdukForm" class="btn btn-primary">Update Produk</button>
+            </div>
+        </div>
+    </div>
+</div>
+    </div>
+</div>
+    <script src="/static/admin.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const editModal = new bootstrap.Modal(document.getElementById('editProdukModal'));
+            const editProdukForm = document.getElementById('editProdukForm');
+    
+            // Function to fill in the form fields
+            function fillEditForm(product) {
+                editProdukForm.elements['no_artikel'].value = product._no_artikel;
+                editProdukForm.elements['nama'].value = product._nama;
+                editProdukForm.elements['deskripsi'].value = product._deskripsi;
+                editProdukForm.elements['harga'].value = product._harga;
+                editProdukForm.elements['size_s'].value = product._size_s;
+                editProdukForm.elements['size_m'].value = product._size_m;
+                editProdukForm.elements['size_l'].value = product._size_l;
+                editProdukForm.elements['size_xl'].value = product._size_xl;
+                editProdukForm.elements['file_gambar'].value = product._file_gambar;
+            }
+
+            document.querySelectorAll('.edit-btn').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    const productId = btn.getAttribute('data-product-id');
+                    fetch(`/edit_produk/${productId}`)
+                        .then(response => response.json())
+                        .then(product => {
+                            fillEditForm(product);
+                            editModal.show();
+                        })
+                        .catch(error => console.error('Error fetching product details:', error));
+                });
+            });
+        });
+    </script>
+</body>
+
+{% endblock %}

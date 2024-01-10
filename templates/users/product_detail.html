@@ -1,0 +1,70 @@
+{% extends 'layouts/layout.html' %}
+{% block head %}
+<title>{{ product[2] }} Detail</title>
+<link rel="stylesheet" href="static/layout.css">
+<style>
+  .btn{
+    transition: background-color 0.5s ease;
+  }
+  .btn:hover{
+    background-color: red;
+  }
+  
+    .enlarge-container {
+      overflow: hidden;
+    }
+  
+    .enlarge-image {
+      transform: scale(1);
+      transition: transform 0.5s ease;
+    }
+  
+    .enlarge-image:hover {
+      transform: scale(1.2); 
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="justify-content-center align-items-center">
+    <div class="row mt- justify-content-center align-items-center" style="height: 100vh;">
+      <div class="col-md-4 text-center enlarge-container">
+        {% if product %}
+          <img
+            src="{{ url_for('static', filename='uploads/' + product[6]) }}"
+            class="card-img-top enlarge-image "
+            alt="Product Image"
+            style="max-height: 500px"
+          />
+        {% else %}
+          <h2>Product Not Found</h2>
+        {% endif %}
+      </div>
+      <div class="col-md-4">
+        {% if product %}
+          <div class="card border-0" style="height:500px;">
+            <div class="card-body">
+              <h5 class="card-title  text-center fw-bold">{{ product[2] }}</h5>
+              <hr>
+              <p class="card-text">{{ product[3] }}</p>
+              <hr>  
+              <p>Size: {{ product[5] }}</p>
+              <hr>
+              <hr>  
+              <p class="fw-semibold">Harga: {{ product[4] }}</p>
+              <hr>
+              <br>
+              <br>
+              <br>
+              <form method="post" action="{{ url_for('add_to_cart', product_id=product[0]) }}">
+                <button type="submit" class="btn btn-dark border-0 rounded-0">Add to Cart</button>
+              </form>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

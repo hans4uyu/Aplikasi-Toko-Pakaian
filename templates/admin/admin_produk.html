@@ -1,31 +1,132 @@
-{% extends 'layouts/admin_layout.html' %}
+{% extends 'layouts/admin_layout.html' %} {% block head %}
+<link rel="stylesheet" href="/static/admin.css">
+<title>Halaman Admin</title>
+<style>
+    .tambah{
+        transition: background-color 1s;
+    }
+    .tambah:hover{
+        background-color: red;
+    }
+</style>
+{% endblock %} {% block body %}
+<div class="wrapper">
+    <!-- Sidebar  -->
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <h3>Welcome {{session['username']}}, to the Dashboard!</h3>
+        </div>
 
-{% block body %}
-<div class="container">
-    <h1 class="mt-4">Daftar Produk</h1>
-    <table class="table">
-        <thead class="table-dark">
-            <tr>
-                <th scope="col">ID Produk</th>
-                <th scope="col">No Artikel</th>
-                <th scope="col">Nama Produk</th>
-                <th scope="col">Image</th>
-                <th scope="col">Size Produk</th>
-                <th scope="col">Harga</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for product in products %}
-            <tr>
-                <td>{{ product.id_produk }}</td>
-                <td>{{ product.no_artikel }}</td>
-                <td>{{ product.nama_produk }}</td>
-                <td>{{}}</td>
-                <td>{{ product.size_produk }}</td>
-                <td>{{ product.harga }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+        <ul class="list-unstyled components">
+            <li>
+                <a href="{{ url_for('admin') }}">Home</a>
+            </li>
+            <li class="active">
+                <a href="{{ url_for('admin_produk') }}">Products</a>
+            </li>
+        </ul>
+
+        <ul class="list-unstyled CTAs">
+            <li>
+                <a href="{{ url_for('logout') }}" class="download">Logout</a>
+            </li>
+        </ul>
+    </nav>
+    <div id="content">
+        <h2>Daftar Produk</h2>
+        <br>
+        <br>
+        <button type="button" class="btn btn-dark mb-3 rounded-0 border-0 tambah" data-bs-toggle="modal"
+        data-bs-target="#addProdukModal">
+            Add Produk
+        </button>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>No Artikel</th>
+                    <th>Nama</th>
+                    <th>Deskripsi</th>
+                    <th>Harga</th>
+                    <th>Size</th>
+                    <th>Foto</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr>
+                    <td>{{ product[0] }}</td>
+                    <td>{{ product[1] }}</td>
+                    <td>{{ product[2] }}</td>
+                    <td>{{ product[3] }}</td>
+                    <td>{{ product[4] }}</td>
+                    <td>{{ product[5] }}</td>
+                    <td>{{ product[6] }}</td>
+                    <td>
+                            <div style="display: flex;">
+                                <a href="{{ url_for('edit_produk', id=product[0]) }}" class="btn btn-warning btn-sm" style="margin-right: 10px;">Edit</a>
+                                <a href="{{ url_for('delete_produk', id=product[0]) }}" class="btn btn-danger btn-sm">Delete</a>
+                            </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Add Produk Modal -->
+        <div class="modal fade" id="addProdukModal" tabindex="-1" aria-labelledby="addProdukModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addProdukModalLabel">Tambahkan Data Produk</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="addProdukForm" method="POST" action="/add" enctype="multipart/form-data" onsubmit="return validateForm()">
+                            <div class="mb-3">
+                                <label for="no_artikel" class="form-label">Nomor Artikel</label>
+                                <input type="text" class="form-control" id="no_artikel" name="no_artikel" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="nama_produk" class="form-label">Nama Produk</label>
+                                <input type="text" class="form-control" id="nama_produk" name="nama_produk" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="deskripsi" class="form-label">Deskripsi</label>
+                                <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3" required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="harga" class="form-label">Harga</label>
+                                <input type="number" class="form-control" id="harga" name="harga" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="size" class="form-label">Size</label>
+                                <select class="form-control" id="size" name="size" required>
+                                    <option value="S">S</option>
+                                    <option value="M">M</option>
+                                    <option value="L">L</option>
+                                    <option value="XL">XL</option>
+                                    <option value="XXL">XXL</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="file_gambar" class="form-label">File Gambar</label>
+                                <input class="form-control" type="file" id="formFileMultiple" name="file_gambar" multiple required/>
+                            </div>
+                        </form>
+                        <div id="feedbackMessage"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kembali</button>
+                        <button type="submit" form="addProdukForm" class="btn btn-primary">Tambah Produk</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+    <script src="/static/admin.js"></script>
+</body>
+
 {% endblock %}

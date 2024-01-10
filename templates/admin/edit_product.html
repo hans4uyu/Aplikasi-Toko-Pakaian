@@ -1,0 +1,51 @@
+{% extends 'layouts/admin_layout.html' %} 
+{% block head %}
+    <link rel="stylesheet" href="/static/admin.css">
+    <title>Edit Produk - {{ product[2] }}</title>
+{% endblock %} 
+
+{% block body %}
+<div class="wrapper">
+
+    <div id="content">
+        <h2>Edit Produk - {{ product[2] }}</h2>
+        <div class="line"></div>
+        <div class="mb-3"></div>
+
+        <form id="editProdukForm" method="POST" action="{{ url_for('edit_produk', id=product[0]) }}" enctype="multipart/form-data" onsubmit="return validateForm()">
+            <div class="mb-3">
+                <label for="no_artikel" class="form-label">Nomor Artikel</label>
+                <input type="text" class="form-control" id="no_artikel" name="no_artikel" value="{{ product[1] }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="nama_produk" class="form-label">Nama Produk</label>
+                <input type="text" class="form-control" id="nama_produk" name="nama_produk" value="{{ product[2] }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="deskripsi" class="form-label">Deskripsi</label>
+                <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3" required>{{ product[3] }}</textarea>
+            </div>
+            <div class="mb-3">
+                <label for="harga" class="form-label">Harga</label>
+                <input type="number" class="form-control" id="harga" name="harga" value="{{ product[4] }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="size" class="form-label">Size</label>
+                <input type="text" class="form-control" id="size" name="size" value="{{ product[5] }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="file_gambar" class="form-label">File Gambar</label>
+                <input class="form-control" type="file" id="file_gambar" name="file_gambar"value="{{ product[6] }}" required/>
+            </div>
+            <input type="hidden" name="_method" value="PUT">
+
+            <div class="modal-footer">
+                <button type="submit" form="editProdukForm" class="btn btn-primary">Simpan Perubahan</button>
+            </div>
+        </form>
+        <div id="feedbackMessage"></div>
+    </div>
+</div>
+<script src="/static/admin.js"></script>
+</body>
+{% endblock %}

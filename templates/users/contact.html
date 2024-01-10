@@ -1,36 +1,45 @@
 {%extends 'layouts/layout.html'%}
 
 {%block head%}
-<title>Halaman about</title>
-{%endblock%} {%block body%}
-<div class="container-fluid">
-  
-  <div class="jumbotron mt-4 container">
-    <h1 class="display-4">Contact Us</h1>
-    <p class="text-center">
+<title>HALLODEKK Contact</title>
+<style>
+  .btn{
+  transition: background-color 0.5s ease;
+}
 
-      Kami selalu senang mendengar dari Anda. Jika Anda memiliki pertanyaan, komentar, atau saran, jangan ragu untuk menghubungi kami melalui salah satu metode berikut:
-      
-        Alamat Toko:
-      Jalan Malioboro No. 123, Yogyakarta, Indonesia
-      
-        Jam Operasional:
-      Senin - Sabtu: 10:00 - 21:00
-      Minggu: 12:00 - 18:00
-      
-        Telepon:
-      +62 123 456 7890
-      
-        Email:
-      HalloDek@gmail.com
-      
-      Anda juga bisa mengunjungi kami di media sosial:
-      - Facebook: HalloDek
-      - Instagram: HalloDek
-      - Twitter: HalloDek
-      
-      Terima kasih telah memilih Hallo Dek. Kami berharap dapat melayani Anda.
-      </p>
+  .btn:hover{
+    background-color: red;
+  }
+  .contact{
+    letter-spacing: 3px;
+  }
+</style>
+{%endblock%} {%block content%}
+<div class="container mt-4 mx-auto" style="width:950px">
+  <div class="mb-5 mx-auto" style="width:65%;">
+    <h2 class="text-center fs-6 text-muted text-uppercase">Get In Touch</h2>
+    <br>
+    <h2 class="text-center fs-4 contact text-uppercase fw-bold">Contact Form</h2>
+    <hr>
+    <p class="fw-medium text-center text-muted">Please feel free to contact us if you need any further information.</p>
   </div>
+  <br>
+  <form>
+      <div class="row mb-3">
+          <div class="col-md-6">
+              <label for="input1" class="form-label fw-semibold small">Name</label>
+              <input type="text" class="form-control rounded-0 shadow-none" id="input1" placeholder="Your Name">
+          </div>
+          <div class="col-md-6">
+              <label for="input2" class="form-label fw-semibold small">Email</label>
+              <input type="text" class="form-control rounded-0 shadow-none" id="input2" placeholder="Your Email">
+          </div>
+      </div>
+      <div class="mb-3">
+          <label for="textareaInput" class="form-label mt-3 fw-semibold small">Message</label>
+          <textarea class="form-control rounded-0 shadow-none" id="textareaInput" rows="8" placeholder="Enter your message..."></textarea>
+      </div>
+      <button type="submit" class="btn btn-dark w-100 mt-3 rounded-0 border-0 d-flex align-items-center justify-content-center"><span class="fw-semibold text-uppercase" style="font-size: 12px ;">Send Your Message</span></button>
+  </form>
 </div>
 {%endblock%}

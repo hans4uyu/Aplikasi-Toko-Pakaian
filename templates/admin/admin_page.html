@@ -1,18 +1,17 @@
 {% extends 'layouts/admin_layout.html' %} {% block head %}
-<link rel="stylesheet" href="/static/admin.css">
 <title>Halaman Admin</title>
+<link rel="stylesheet" href="/static/admin.css">
 {% endblock %} {% block body %}
 <div class="wrapper">
     <!-- Sidebar  -->
     <nav id="sidebar">
         <div class="sidebar-header">
-            <h3>Welcome to the Admin Dashboard, {{ session['username'] }}!</h3>
+            <h3>Welcome {{session['username']}}, to the Dashboard!</h3>
         </div>
 
         <ul class="list-unstyled components">
-            <p>Dummy Heading</p>
             <li class="active">
-                <a href="#home" aria-expanded="false" class="">Home</a>
+                <a href="{{ url_for('admin') }}">Home</a>
             </li>
             <li>
                 <a href="{{ url_for('admin_produk') }}">Products</a>
@@ -38,7 +37,7 @@
                     <th scope="col">ID</th>
                     <th scope="col">Username</th>
                     <th scope="col">Email</th>
-                    <th scope="col"></th>
+                    <th scope="col">Type</th>
                 </tr>
             </thead>
             <tbody>

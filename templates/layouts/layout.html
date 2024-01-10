@@ -3,6 +3,9 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="static/layout.css">
+    <link rel="icon" type="image/x-icon" href="/static/images/logo H.png">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@100;400;600&display=swap" rel="stylesheet">
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
@@ -12,10 +15,62 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
     />
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        margin: 0;
+      }
+  
+      .content {
+        flex: 1;
+      }
+  
+      .footer {
+        background-color: #f8f9fa;
+        padding: 10px;
+        text-align: center;
+      }
+
+      .fa-right-from-bracket{
+        transition: color 0.75s;
+      }
+
+      .fa-right-from-bracket:hover{
+        color: red;
+      }
+
+      .navbar-nav .nav-link {
+        color:black;
+        font-weight: bold;
+        transition: color 1s;
+      }
+
+      .navbar-nav .nav-link:hover{
+        color:red;
+      }
+
+      .navbar {
+    padding: 20px; 
+  }
+
+  .navbar-brand {
+    font-size: 1.5rem; 
+  }
+
+  .navbar-nav .nav-link {
+    font-size: 15px; 
+    padding: 0 20px;
+    margin-left: 5px; 
+    letter-spacing: 2px;
+  }
+
+    </style>
     {%block head%} {%endblock%}
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <nav class="navbar navbar-expand-lg bg-light">
       <div class="container-fluid">
         <button
           class="navbar-toggler"
@@ -28,82 +83,132 @@
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand" href="#">Hallo Dek</a>
+              <a class="navbar-brand" href="{{ url_for('home')}}">
+                <img src="/static/images/Group 1.png" style="width:125px ;" alt="Home">
+            </a>
         <div
-          class="collapse navbar-collapse justify-content-center"
+          class="collapse navbar-collapse d-flex justify-content-center"
           id="navbarTogglerDemo01"
         >
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <ul class="navbar-nav  mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="home"
-                >Home</a
-              >
+              <a class="nav-link text-uppercase" href="{{ url_for('home')}}">Home</a>
+            </li>
+          <ul class="navbar-nav  mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link text-uppercase" href="{{ url_for('product')}}">Product</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="product">Product</a>
+              <a class="nav-link text-uppercase" href="{{ url_for('about')}}">About Us</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="about">About Us</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="contact">Contact</a>
+              <a class="nav-link text-uppercase" href="{{ url_for('contact')}}">Contact</a>
             </li>
           </ul>
         </div>
         <a
-          class="nav-link cart-link me-3"
+          class="nav-link cart-link me-3 mr-5"
           href="#"
           data-bs-toggle="modal"
           data-bs-target="#cartModal"
         >
-          <i class="fas fa-shopping-cart"></i> Cart
+        <i class="fa-solid fa-cart-shopping fa-xl"></i>
         </a>
-        <a class="nav-link" href="logout">Logout</a>
+        <a class="nav-link ml-5" href="{{ url_for('logout')}}"><i class="fa-solid fa-right-from-bracket fa-xl"></i></a>
       </div>
     </nav>
     <!-- Cart Modal -->
-    <div
-      class="modal fade"
-      id="cartModal"
-      tabindex="-1"
-      aria-labelledby="cartModalLabel"
-      aria-hidden="true"
-    >
+    <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
       <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="cartModalLabel">Your Cart</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
+          <div class="modal-content rounded-0">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="cartModalLabel">Your Cart</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                  {% if 'cart' in session and session['cart'] %}
+                      <ul class="list-group">
+                          {% for product in session['cart'] %}
+                              <li class="list-group-item">No Artikel: {{ product[1] }}</li>
+                              <li class="list-group-item">Nama : {{ product[2] }}</li>
+                              <a href="{{ url_for('remove_from_cart', product_id=product[0]) }}" class="btn btn-danger btn-sm float-end">Remove</a>
+                          {% endfor %}
+                      </ul>
+                  {% else %}
+                    <div>
+                      <p>Your cart is empty.</p>
+                    </div>
+                  {% endif %}
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  {% if 'cart' in session and session['cart'] %}
+                  <a href="{{ url_for('checkout') }}" class="btn btn-primary">Checkout</a>
+                  {% endif %}
+              </div>
           </div>
-          <div class="modal-body">
-            <!-- Add your cart content here -->
-            <p>Cart items go here...</p>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-            <button type="button" class="btn btn-primary">Checkout</button>
-          </div>
-        </div>
       </div>
     </div>
-    {%block body%} {%endblock%}
-    <footer class="bg-dark text-light text-center py-4">
+
+    {% block body %}
+    <div class="content">
+      {% block content %}{% endblock %}
+    </div>
+
+    {% endblock %}
+    <!-- Site footer -->
+    <footer class="site-footer mt-5 ">
       <div class="container">
-        <p>&copy; 2024 Your Website. All rights reserved.</p>
+        <div class="row">
+          <div class="col-sm-12 col-md-6">
+            <h6>Hallo Dekk</h6>
+            <p class="text-justify">Kami selalu senang mendengar dari Anda. <br> 
+              Jika Anda memiliki pertanyaan, komentar, atau saran, <br>
+              jangan ragu untuk menghubungi kami melalui salah satu metode.</p>
+          </div>
+    
+          <div class="col-xs-6 col-md-2">
+            <h6>SOCIAL MEDIA</h6>
+            <div class="d-flex flex-column">
+              <a class="facebook d-flex align-items-center mb-2" href="https://www.facebook.com/your_facebook_username" target="_blank"><i class="fab fa-facebook me-2"></i> Facebook</a>
+              <a class="instagram d-flex align-items-center mb-2" href="https://www.instagram.com/your_instagram_username" target="_blank"><i class="fab fa-instagram me-2"></i> Instagram</a>
+              <a class="twitter d-flex align-items-center mb-2" href="https://twitter.com/your_twitter_username" target="_blank"><i class="fab fa-twitter me-2"></i> Twitter</a>
+            </div>
+          </div>
+    
+          <div class="col-xs-6 col-md-2">
+            <h6>Contact</h6>
+            <ul class="footer-links" style="list-style-type: none;">
+              <li><a href="tel:your_phone_number"><i class="fas fa-phone me-2"></i>Telepon</a></li>
+              <li><a href="mailto:your_email@example.com"><i class="fas fa-envelope me-2"></i>Email</a></li>
+            </ul>
+          </div>
+    
+          <div class="col-xs-6 col-md-2">
+            <h6>JAM OPERASIONAL</h6>
+            <ul class="footer-links" style="list-style-type: none;">
+              <li>Senin - Jumat: 09.00 - 17.00</li>
+              <li>Sabtu: 10.00 - 14.00</li>
+              <li>Minggu: Tutup</li>
+            </ul>
+          </div>
+          
+        </div>
+        <hr>
       </div>
-    </footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8 col-sm-6 col-xs-12">
+            <p class="copyright-text">Copyright &copy; 2024 All Rights Reserved by 
+         <a href="{{ url_for('home')}}">HALLO DEKK</a>.
+            </p>
+          </div>
+
+        </div>
+      </div>
+  </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/fd77badbd4.js" crossorigin="anonymous"></script>
   </body>
 </html>

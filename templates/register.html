@@ -1,44 +1,81 @@
 {%extends 'layouts/admin_layout.html'%}
 {%block head%}
-<title>Halaman Register</title>
+<title>HALLODEKK Register</title>
+<style>
+    .btn{
+        transition: background-color 1s;
+    }
+    .btn:hover{
+        background-color: red;
+    }
+    .card-body {
+        overflow-x: auto;
+    }
+    .card {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s ease-in-out; 
+    }
+
+    .card:hover {
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+    
+</style>
 {%endblock%}
 {%block body%}
-<div class="mt-5"></div>
-<div class="row justify-content-center">
-    <div  class="col-4">
-        <div class="card">
-            <div class="card-header">
-                <h2 class="text-center card-header bg-primary text-white">Register</h2>
+<section class="vh-100" style="background-color: #ffffff;">
+    <div class="container py-5 h-100">
+      <div class=" d-flex justify-content-center align-items-center h-100">
+        <div class="col col-md-6">
+          <div class="card mx-auto border-0">
+            <div class="rounded-0">
+              <div class="d-flex align-items-center">
+                <div class="card-body p-4 p-lg-4 text-black">
+  
+                  <form method="POST">
+  
+                    <div class="d-flex align-items-center mb-3 pb-1">
+                      <span class="h1 fw-bold mb-0">
+                        <img src="/static/images/Group 4.png" style="width:125px ;">
+                      </span>
+                    </div>
+  
+                    <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Sign into your account</h5>
+  
+                    <div class="form-outline mb-4">
+                      <input type="text" name="inpUsn" class="form-control form-control-lg rounded-0" />
+                      <label class="form-label">Usename</label>
+                    </div>
+
+                    <div class="form-outline mb-4">
+                      <input type="email" name="inpEmail" class="form-control form-control-lg rounded-0" />
+                      <label class="form-label">Email address</label>
+                    </div>
+  
+                    <div class="form-outline mb-4">
+                      <input type="password" name="inpPass" class="form-control form-control-lg rounded-0" />
+                      <label class="form-label">Password</label>
+                    </div>
+
+                    <div class="form-outline mb-4">
+                      <input type="password" name="inpPass2" class="form-control form-control-lg rounded-0" />
+                      <label class="form-label">Confirm Password</label>
+                    </div>
+  
+                    <div class="pt-1 mb-4">
+                      <button class="btn btn-dark btn-lg btn-block border-0 rounded-0" type="submit">Register</button>
+                    </div>
+  
+                    <p class="mb-2 pb-lg-2" style="color: #393f81;">Have an account? <a href="{{url_for('login')}}"
+                        style="color: #393f81;">Login here</a></p>
+                  </form>
+  
+                </div>
+              </div>
             </div>
-            <div class="card-body">
-                <form method="POST">
-                    <div class="mb-3">
-                        <label class="form-label">UserName</label>
-                        <input name="inpUsn" type="text" class="form-control">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Email address</label>
-                        <input name="inpEmail" type="email" class="form-control">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Password</label>
-                        <input name="inpPass" type="password"  class="form-control"> 
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label"> confirm Password</label>
-                        <input name="inpPass2" type="password"  class="form-control"> 
-                    </div>
-                    <div class="d-grid">
-                        <!-- Change the button text to Register -->
-                        <button type="submit" class="btn btn-primary mt-4">Register</button>
-                    </div>
-                    <div class="d-grid">
-                        <!-- Change the button text to Register -->
-                        Alredy have account? <a href="{{url_for('login')}}">Login</a>
-                    </div>
-                </form>
-            </div>
+          </div>
         </div>
+      </div>
     </div>
-</div>
+  </section>
 {%endblock%}

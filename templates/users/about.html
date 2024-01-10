@@ -1,26 +1,53 @@
 {%extends 'layouts/layout.html'%}
 
 {%block head%}
-<title>Halaman about</title>
+<title>About HALLODEKK</title>
+<style>
+  .halo {
+      position: relative;
+      display: inline-block;
+      overflow: hidden;
+      margin-right: 10px; 
+      line-height: 0.75; 
+    }
+
+    .halo::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background-color: black; 
+      transition: left 1s;
+    }
+
+    .halo:hover::before {
+      left: 100%;
+    }
+</style>
+
 {%endblock%} 
-{%block body%}
+{%block content%}
 
-<div class="container">
-    <div class="jumbotron mt-4">
-      <h1 class="display-4 text-black">About Us</h1>
-      <p class="text-center text-black">
-
-        Selamat datang di Hallo Dek, toko pakaian eksklusif yang berlokasi di kota Yogyakarta. Kami bangga menjadi bagian dari komunitas lokal dan berkomitmen untuk menyediakan pakaian berkualitas tinggi untuk pelanggan kami.
-        
-        Sejak berdiri, kami telah berfokus pada penawaran pakaian yang tidak hanya modis, tetapi juga unik dan eksklusif. Kami percaya bahwa pakaian adalah bentuk ekspresi diri, dan kami berdedikasi untuk membantu pelanggan kami menemukan gaya mereka yang unik.
-        
-        Koleksi kami mencakup berbagai merek dan desainer, baik lokal maupun internasional, yang dipilih dengan cermat untuk memastikan bahwa kami menawarkan pakaian terbaik. Dari pakaian sehari-hari hingga pakaian formal, kami memiliki sesuatu untuk setiap kesempatan.
-        
-        Namun, apa yang benar-benar membedakan kami adalah komitmen kami terhadap kualitas. Setiap item dalam koleksi kami dipilih dengan cermat untuk memastikan bahwa kami hanya menawarkan produk yang memenuhi standar kualitas tertinggi. Kami percaya bahwa pelanggan kami pantas mendapatkan yang terbaik, dan itulah yang kami berikan.
-  
-        Terima kasih telah memilih Hallo Dek. Kami berharap dapat membantu Anda menemukan pakaian sempurna untuk Anda.
-        </p>
+<div class="container bg-danger ">
+  <br>
+  <div class="jumbotron mt-2">
+    <h3 class="text-center text-white text-uppercase">Selamat Datang di <span class="halo">HALLO DEKK</span></h3>
+    <h3 class="text-center text-white text-capitalize">toko pakaian eksklusif yang berlokasi di kota Yogyakarta.</h3>
+    <hr>
+    <div class="text-justify px-3 text-white text-center"> 
+      <p class="lead">Kami bangga menjadi bagian dari komunitas lokal dan berkomitmen untuk menyediakan pakaian berkualitas tinggi untuk pelanggan kami. Sejak berdiri, kami telah berfokus pada penawaran pakaian yang tidak hanya modis, tetapi juga unik dan eksklusif.</p>
+      
+      <p class="lead">Kami percaya bahwa pakaian adalah bentuk ekspresi diri, dan kami berdedikasi untuk membantu pelanggan kami menemukan gaya mereka yang unik. Koleksi kami mencakup berbagai merek dan desainer, baik lokal maupun internasional, yang dipilih dengan cermat untuk memastikan bahwa kami menawarkan pakaian terbaik. Dari pakaian sehari-hari hingga pakaian formal, kami memiliki sesuatu untuk setiap kesempatan.</p>
+      
+      <p class="lead">Namun, apa yang benar-benar membedakan kami adalah komitmen kami terhadap kualitas. Setiap item dalam koleksi kami dipilih dengan cermat untuk memastikan bahwa kami hanya menawarkan produk yang memenuhi standar kualitas tertinggi. Kami percaya bahwa pelanggan kami pantas mendapatkan yang terbaik, dan itulah yang kami berikan.</p>
     </div>
+    <hr>
+    <h5 class="text-center text-white text-capitalize">Terima kasih telah memilih Hallo Dekk. Kami berharap dapat membantu Anda menemukan pakaian sempurna untuk Anda.</h5>
+  </div>
+  <br>
 </div>
+
 
 {%endblock%}

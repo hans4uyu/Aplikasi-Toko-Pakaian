@@ -1,0 +1,72 @@
+{% extends 'layouts/admin_layout.html' %} 
+{% block head %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Karla:wght@200;300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/edit_produk.css    ">
+    <title>Edit Produk - {{ product[2] }}</title>
+    <style>
+        .img{
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease-in-out; 
+        }
+        .img:hover{
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+{% endblock %} 
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <h2 class="login-title text-center">Edit Produk - {{ product[2] }}</h2>
+      <div class="col-sm-6 col-md-6 intro-section">
+        <div class="intro-content-wrapper">
+            <img
+            src="{{ url_for('static', filename='uploads/' + product[6]) }}"
+            class="card-img-top w-100 rounded-0 img"
+            alt="Product Image"
+            style="max-height: 1000px; object-fit:cover;"
+          />
+        </div>
+      </div>
+      <div class="col-sm-5 col-md-5 form-section">
+        <div class="login-wrapper">
+          <form id="editProdukForm" method="POST" action="{{ url_for('edit_produk', id=product[0]) }}" enctype="multipart/form-data" onsubmit="return validateForm()">
+            <div class="mb-3">
+                <label for="no_artikel" class="form-label">Nomor Artikel</label>
+                <input type="text" class="form-control" id="no_artikel" name="no_artikel" value="{{ product[1] }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="nama_produk" class="form-label">Nama Produk</label>
+                <input type="text" class="form-control" id="nama_produk" name="nama_produk" value="{{ product[2] }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="deskripsi" class="form-label">Deskripsi</label>
+                <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3" required>{{ product[3] }}</textarea>
+            </div>
+            <div class="mb-3">
+                <label for="harga" class="form-label">Harga</label>
+                <input type="number" class="form-control" id="harga" name="harga" value="{{ product[4] }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="size" class="form-label">Size</label>
+                <input type="text" class="form-control" id="size" name="size" value="{{ product[5] }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="file_gambar" class="form-label">File Gambar</label>
+                <input class="form-control" type="file" id="file_gambar" name="file_gambar"value="{{ product[6] }}" required/>
+            </div>
+            <input type="hidden" name="_method" value="PUT">  
+            <div class="modal-footer d-flex justify-content-around mb-3">
+                
+                <button type="submit" form="editProdukForm" class="btn btn-dark rounded-0">Simpan Perubahan</button>
+                <a href="{{url_for('admin_produk')}}" class="btn btn-danger rounded-0">Back</a>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<script src="/static/admin.js"></script>
+</body>
+{% endblock %}
