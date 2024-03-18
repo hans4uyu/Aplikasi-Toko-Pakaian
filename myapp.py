@@ -259,7 +259,6 @@ def invoice(purchase_id):
     try:
         cur = mysql.connection.cursor()
 
-        # Fetch invoice information from the database
         cur.execute("SELECT * FROM invoices WHERE purchase_id = %s", (purchase_id,))
         invoice_info = cur.fetchone()
 
@@ -267,11 +266,11 @@ def invoice(purchase_id):
             flash('Invoice not found.', 'error')
             return redirect(url_for('home'))
 
-        # Fetch shipping address and payment details
+       
         cur.execute("SELECT alamat_pengiriman, payment FROM pembelian WHERE purchase_id = %s", (purchase_id,))
         purchase_info = cur.fetchone()
 
-        # Fetch products associated with the invoice
+       
         cur.execute("""
             SELECT p.*, pd.quantity, pd.total_price, pb.buyer_name
             FROM produk p
@@ -294,7 +293,7 @@ def invoice(purchase_id):
         print(f"Error generating invoice: {str(e)}")
         flash('An error occurred while generating the invoice.', 'error')
         return redirect(url_for('home'))
-# CRUD admin product
+
 @app.route('/admin_produk')
 def admin_produk():
     cur = mysql.connection.cursor()

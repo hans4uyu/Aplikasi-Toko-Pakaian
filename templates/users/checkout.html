@@ -3,7 +3,7 @@
 {% block head %}
 <title>Chekout DEKK</title>
 <style>
-        /* Add your modal styling here */
+        acti
         .modal {
             display: none;
             position: fixed;
@@ -32,7 +32,7 @@
         }
         .product-card {
         margin: 50px; 
-        margin-bottom: 10px; /* Menambahkan margin ke sekeliling kartu produk */
+        margin-bottom: 10px; 
     }
 </style>
 {% endblock %}
@@ -63,17 +63,18 @@
             </ul>
 
             <form method="post" action="{{ url_for('process_checkout') }}" id="checkoutForm">
-                <!-- Tambahkan formulir untuk shipping_address dan payment_method -->
+               
                 <div class="form-group" style="background-color: #eee; margin: 10px; border-radius: 10px; padding: 20px;">
-                    <label for="shipping_address">Shipping Address:</label>
+                    <label for="shipping_address">Alamat Pengiriman:</label>
                     <input type="text" class="form-control" id="shipping_address" name="shipping_address" required>
                 </div>
 
                 <div class="form-group" style="background-color: #eee; margin: 10px; border-radius: 10px; padding: 20px;">
-                    <label for="payment_method">Payment Method:</label>
+                    <label for="payment_method">Metode Pembayaran:</label>
                     <select class="form-control" id="payment_method" name="payment_method" required>
-                        <option value="credit_card">Credit Card</option>
-                        <option value="paypal">PayPal</option>
+                        <option value="Credit Card">Credit Card</option>
+                        <option value="PayPal">PayPal</option>
+                        <option value="M-Banking">M-Banking</option>
                     </select>
                 </div>
 
